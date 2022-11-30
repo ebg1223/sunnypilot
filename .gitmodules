@@ -1,0 +1,4 @@
+[submodule "panda"]
+	path = panda
+	url = https://github.com/ebg1223/panda
+	branch = sunny-icelong
