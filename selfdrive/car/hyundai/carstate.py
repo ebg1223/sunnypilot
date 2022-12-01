@@ -792,6 +792,7 @@ class CarState(CarStateBase):
         ("DISTANCE_SETTING", "CRUISE_INFO"),
         ("SET_SPEED", "CRUISE_INFO"),
         ("NEW_SIGNAL_4", "CRUISE_INFO"),
+      ]
       checks += [
         ("CRUISE_INFO", 50),
       ]
