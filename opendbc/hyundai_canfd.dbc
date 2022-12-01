@@ -77,12 +77,13 @@ BO_ 96 ESP_STATUS: 32 XXX
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
  SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
  SG_ ESP_DISABLED : 42|3@1+ (1,0) [0|63] "" XXX
- SG_ BRAKE_POSITION : 128|10@1+ (1,0) [0|65535] "" XXX
+ SG_ BRAKE_PRESSURE : 128|10@1+ (1,0) [0|65535] "" XXX
  SG_ BRAKE_PRESSED : 148|1@1+ (1,0) [0|3] "" XXX
 
 BO_ 101 BRAKE: 32 XXX
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
  SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
+ SG_ BRAKE_POSITION : 40|16@1- (1,0) [0|65535] "" XXX
  SG_ BRAKE_PRESSED : 57|1@1+ (1,0) [0|3] "" XXX
 
 BO_ 160 WHEEL_SPEEDS: 24 XXX
@@ -143,11 +144,24 @@ BO_ 304 GEAR_SHIFTER: 16 XXX
  SG_ GEAR : 64|3@1+ (1,0) [0|7] "" XXX
  SG_ KNOB_POSITION : 40|3@1+ (1,0) [0|3] "" XXX
 
-BO_ 373 SCC1: 24 XXX
+BO_ 373 TCS: 24 XXX
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
  SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
- SG_ ACCEL_REQ : 48|13@1- (1,0) [0|1023] "" XXX
- SG_ CRUISE_ACTIVE : 68|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_1 : 80|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_2 : 74|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_3 : 76|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_4 : 24|7@1+ (1,0) [0|127] "" XXX
+ SG_ aBasis : 32|11@1+ (0.01,-10.23) [0|7] "m/s^2" XXX
+ SG_ NEW_SIGNAL_5 : 72|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_6 : 128|4@1+ (1,0) [0|15] "" XXX
+ SG_ NEW_SIGNAL_7 : 135|2@0+ (1,0) [0|3] "" XXX
+ SG_ PROBABLY_EQUIP : 136|2@1+ (1,0) [0|3] "" XXX
+ SG_ AEB_EQUIP_MAYBE : 96|1@0+ (1,0) [0|1] "" XXX
+ SG_ EQUIP_MAYBE : 64|1@0+ (1,0) [0|1] "" XXX
+ SG_ DriverBraking : 81|1@0+ (1,0) [0|1] "" XXX
+ SG_ DriverBrakingLowSens : 84|1@1+ (1,0) [0|1] "" XXX
+ SG_ ACC_REQ : 68|1@0+ (1,0) [0|1] "" XXX
+ SG_ ACCEL_REF_ACC : 48|11@1- (1,0) [0|1023] "" XXX
 
 BO_ 352 ADRV_0x160: 16 ADRV
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
@@ -265,7 +279,7 @@ BO_ 441 CAM_0x1b9: 32 CAMERA
 
 BO_ 463 CRUISE_BUTTONS: 8 XXX
  SG_ _CHECKSUM : 0|8@1+ (1,0) [0|65535] "" XXX
- SG_ LKAS_BTN : 23|1@1+ (1,0) [0|1] "" XXX
+ SG_ LFA_BTN : 23|1@1+ (1,0) [0|1] "" XXX
  SG_ SET_ME_1 : 29|1@1+ (1,0) [0|1] "" XXX
  SG_ ADAPTIVE_CRUISE_MAIN_BTN : 19|1@1+ (1,0) [0|1] "" XXX
  SG_ NORMAL_CRUISE_MAIN_BTN : 21|1@1+ (1,0) [0|1] "" XXX
@@ -323,8 +337,8 @@ BO_ 507 CAM_0x1fb: 32 CAMERA
 BO_ 512 ADRV_0x200: 8 ADRV
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
  SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
- SG_ SET_ME_3A : 32|8@1+ (1,0) [0|255] "" XXX
  SG_ SET_ME_E1 : 24|8@1+ (1,0) [0|255] "" XXX
+ SG_ SET_ME_3A : 32|8@1+ (1,0) [0|255] "" XXX
 
 BO_ 513 RADAR_0x201: 32 FRONT_RADAR
  SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
@@ -463,7 +477,7 @@ BO_ 961 BLINKER_STALKS: 8 XXX
  SG_ HIGHBEAM_BACKWARD : 26|1@0+ (1,0) [0|1] "" XXX
  SG_ RIGHT_BLINKER : 32|1@0+ (1,0) [0|1] "" XXX
  SG_ LEFT_BLINKER : 30|1@0+ (1,0) [0|1] "" XXX
- SG_ LIGHT_KNOB_POSITION : 21|2@0+ (1,0) [0|3] "" XXXCF_
+ SG_ LIGHT_KNOB_POSITION : 21|2@0+ (1,0) [0|3] "" XXX
 
 BO_ 1041 DOORS_SEATBELTS: 8 XXX
  SG_ CHECKSUM_MAYBE : 7|8@0+ (1,0) [0|65535] "" XXX
@@ -479,10 +493,57 @@ BO_ 1043 BLINKERS: 8 XXX
 BO_ 1240 CLUSTER_INFO: 8 XXX
  SG_ DISTANCE_UNIT : 0|1@1+ (1,0) [0|1] "" XXX
 
+BO_ 442 BLINDSPOTS_REAR_CORNERS: 24 XXX
+ SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
+ SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
+ SG_ NEW_SIGNAL_2 : 96|1@0+ (1,0) [0|1] "" XXX
+ SG_ COLLISION_AVOIDANCE_ACTIVE : 68|1@0+ (1,0) [0|1] "" XXX
+ SG_ LEFT_MB : 30|1@0+ (1,0) [0|3] "" XXX
+ SG_ LEFT_BLOCKED : 24|1@0+ (1,0) [0|1] "" XXX
+ SG_ MORE_LEFT_PROB : 32|1@1+ (1,0) [0|3] "" XXX
+ SG_ FL_INDICATOR : 46|6@0+ (1,0) [0|1] "" XXX
+ SG_ FR_INDICATOR : 54|6@0+ (1,0) [0|63] "" XXX
+ SG_ RIGHT_BLOCKED : 64|1@0+ (1,0) [0|1] "" XXX
+
+BO_ 874 BLINDSPOTS_FRONT_CORNER_2: 16 XXX
+ SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
+ SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
+
+BO_ 485 BLINDSPOTS_FRONT_CORNER_1: 16 XXX
+ SG_ COUNTER : 16|8@1+ (1,0) [0|255] "" XXX
+ SG_ CHECKSUM : 0|16@1+ (1,0) [0|65535] "" XXX
+ SG_ NEW_SIGNAL_1 : 108|2@0+ (1,0) [0|3] "" XXX
+ SG_ NEW_SIGNAL_2 : 96|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_3 : 88|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_4 : 80|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_5 : 31|2@0+ (1,0) [0|3] "" XXX
+ SG_ NEW_SIGNAL_6 : 24|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_7 : 32|2@1+ (1,0) [0|3] "" XXX
+ SG_ NEW_SIGNAL_8 : 47|8@0+ (1,0) [0|255] "" XXX
+ SG_ NEW_SIGNAL_9 : 55|8@0+ (1,0) [0|255] "" XXX
+
+BO_ 506 CLUSTER_SPEED_LIMIT: 32 XXX
+ SG_ SPEED_LIMIT_3 : 119|8@0+ (1,0) [0|255] "" XXX
+ SG_ SPEED_LIMIT_2 : 47|7@0+ (1,0) [0|255] "" XXX
+ SG_ SPEED_LIMIT_1 : 39|7@0+ (1,0) [0|255] "" XXX
+ SG_ SPEED_CHANGE_BLINKING : 129|1@1+ (1,0) [0|3] "" XXX
+ SG_ CHIME_2 : 122|2@1+ (1,0) [0|7] "" XXX
+ SG_ CHIME_1 : 133|1@0+ (1,0) [0|1] "" XXX
+ SG_ ARROW_DOWN : 120|1@0+ (1,0) [0|1] "" XXX
+ SG_ ARROW_UP : 121|1@0+ (1,0) [0|1] "" XXX
+ SG_ SECONDARY_LIMIT_1 : 79|8@0+ (1,0) [0|127] "" XXX
+ SG_ SECONDARY_LIMIT_2 : 103|8@0+ (1,0) [0|127] "" XXX
+ SG_ SCHOOL_ZONE : 155|1@0+ (1,0) [0|1] "" XXX
 
 
 
+CM_ SG_ 96 BRAKE_PRESSURE "User applied brake pedal pressure. Ramps from computer applied pressure on falling edge of cruise. Cruise cancels if !=0";
+CM_ SG_ 101 BRAKE_POSITION "User applied brake pedal position, max is ~700. Signed on some vehicles";
+CM_ SG_ 373 PROBABLY_EQUIP "aeb equip?";
+CM_ SG_ 373 DriverBraking "Likely derived from BRAKE->BRAKE_POSITION";
+CM_ SG_ 373 DriverBrakingLowSens "Higher threshold version of DriverBraking";
 CM_ SG_ 352 SET_ME_9 "has something to do with AEB settings";
+CM_ SG_ 416 VSetDis "set speed in display units";
 CM_ SG_ 961 COUNTER_ALT "only increments on change";
 CM_ SG_ 1041 COUNTER_ALT "only increments on change";
 CM_ SG_ 1043 COUNTER_ALT "only increments on change";
@@ -496,6 +557,6 @@ VAL_ 298 LKA_ICON 0 "hidden" 1 "grey" 2 "green" 3 "flashing green" ;
 VAL_ 298 LKA_MODE 1 "warning only" 2 "assist" 6 "off" ;
 VAL_ 304 GEAR 1 "P" 2 "R" 3 "N" 4 "D" ;
 VAL_ 352 AEB_SETTING 1 "off" 2 "warning only" 3 "active assist" ;
-VAL_ 416 CRUISE_STATUS 0 "cruise_inactive" 2 "cruise_active" 4 "driver_override" ;
+VAL_ 416 ACCMode 0 "off" 1 "enabled" 2 "driver_override" 3 "off_maybe_fault" 4 "cancelled" ;
 VAL_ 426 CRUISE_BUTTONS 0 "none" 1 "res_accel" 2 "set_decel" 3 "gap_distance" 4 "pause_resume" ;
 VAL_ 463 CRUISE_BUTTONS 0 "none" 1 "res_accel" 2 "set_decel" 3 "gap_distance" 4 "pause_resume" ;
