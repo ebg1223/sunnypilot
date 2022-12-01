@@ -733,9 +733,8 @@ class CarState(CarStateBase):
   def get_can_parser_canfd(CP):
 
     cruise_btn_msg = "CRUISE_BUTTONS_ALT" if CP.flags & HyundaiFlags.CANFD_ALT_BUTTONS else "CRUISE_BUTTONS"
-    lfa_btn_msg = "LFA_BTN" if CP.flags & HyundaiFlags.CANFD_ALT_BUTTONS else "LKAS_BTN"
+    lfa_btn_msg = "LFA_BTN" if self.CP.flags & HyundaiFlags.CANFD_ALT_BUTTONS else "LKAS_BTN"
     gear_msg = "GEAR_ALT" if CP.flags & HyundaiFlags.CANFD_ALT_GEARS else "GEAR_SHIFTER"
-    brake_msg = "ACCELERATOR_BRAKE_ALT" if CP.carFingerprint not in (EV_CAR | HYBRID_CAR) else "BRAKE"
     signals = [
       ("WHEEL_SPEED_1", "WHEEL_SPEEDS"),
       ("WHEEL_SPEED_2", "WHEEL_SPEEDS"),
